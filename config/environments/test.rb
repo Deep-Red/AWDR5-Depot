@@ -39,4 +39,9 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  # Fixtures provided in book point to assets that don't exist
+  # This doesn't seem to work in Rails 5.1
+  # The following line fixes that
+  config.assets.unknown_asset_fallback = true
 end
