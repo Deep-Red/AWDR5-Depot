@@ -37,6 +37,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
   test "should get edit" do
     get edit_product_url(@product)
     assert_response :success
+    assert_select 'input', minimum: 6
   end
 
   test "should update product" do
