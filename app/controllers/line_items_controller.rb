@@ -1,7 +1,7 @@
 class LineItemsController < ApplicationController
   include CurrentCart
   before_action :set_cart, only: [:create]
-  before_action :set_line_item, only: [:show, :edit, :update, :destroy]
+  before_action :set_line_item, only: [:show, :edit, :update, :destroy, :decrement]
 
   # GET /line_items
   # GET /line_items.json
@@ -69,6 +69,22 @@ class LineItemsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to dest, notice: 'Item removed from cart.' }
       format.json { head :no_content }
+    end
+  end
+
+  def decrement
+    @line_item = @line_item.cart.remove_product(params[:id]) if @line_item.cart.id == session[:cart_id]
+
+    respond_to do |format|
+      if @line_item.quantity == 0 || @line_item.save
+        session[:counter] = 0
+        format.html { redirect_to store_index_url }
+        format.js   { @current_item = @line_item }
+        format.json { render :show, status: :decremented, location: @line_item }
+      else
+        format.html { render :new }
+        format.json { render json: @line_item.errors, status: :unprocessable_entity }
+      end
     end
   end
 

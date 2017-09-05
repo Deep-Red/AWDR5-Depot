@@ -6,6 +6,7 @@
   <td><%= line_item.quantity %> &times;</td>
   <td><%= line_item.product.title %></td>
   <td class="item_price"><%= number_to_currency(line_item.total_price) %></td>
+  <td><%= button_to 'Remove one from cart', line_item_decrement_path(line_item.id), method: :post, params: { id: line_item.id, line_item_id: line_item.id } %></td>
   <td><%= button_to 'Remove from cart', line_item, method: :delete %></td>
 
 </tr>
