@@ -44,4 +44,5 @@ Rails.application.configure do
   # This doesn't seem to work in Rails 5.1
   # The following line fixes that
   config.assets.unknown_asset_fallback = true
+  
 end
